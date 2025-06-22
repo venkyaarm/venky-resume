@@ -9,8 +9,6 @@ body {
   justify-content: center;
   align-items: center;
   transition: background-color 0.4s, color 0.4s;
-  padding: 20px;
-  box-sizing: border-box;
 }
 
 .home-container {
@@ -129,34 +127,4 @@ body.dark .home-button:hover {
 
 body.dark .theme-button {
   color: #fff;
-}
-
-/* ============== */
-/* Mobile Styles  */
-/* ============== */
-@media (max-width: 480px) {
-  .home-container {
-    padding: 30px 16px;
-    border-radius: 16px;
-  }
-
-  .home-title {
-    font-size: 1.6rem;
-    margin-bottom: 16px;
-  }
-
-  .home-button {
-    font-size: 15px;
-    padding: 10px 16px;
-    border-radius: 10px;
-  }
-
-  .theme-toggle {
-    top: 15px;
-    right: 15px;
-  }
-
-  .theme-button {
-    font-size: 20px;
-  }
 }

@@ -26,12 +26,11 @@ body.dark {
   background: linear-gradient(to right, #2c3e50, #34495e);
 }
 
-/* Header */
+/* Title and Toggle */
 .header-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
   margin-bottom: 20px;
 }
 .title {
@@ -93,7 +92,7 @@ body.dark .resume-textarea {
   border: 1px solid #555;
 }
 
-/* Analyze Button */
+/* Button */
 .analyze-btn {
   background-color: #007bff;
   color: white;
@@ -108,7 +107,7 @@ body.dark .resume-textarea {
   background-color: #0056b3;
 }
 
-/* Result Box */
+/* Result */
 .result-box {
   margin-top: 30px;
   background: #ffffff;
@@ -136,18 +135,18 @@ body.dark .result-box h2 {
   font-family: 'Segoe UI', sans-serif;
   color: #2c3e50;
 }
+
 body.dark .styled-analysis {
   color: #ffffff;
 }
 
-/* Export Buttons */
 .export-buttons {
   margin-top: 20px;
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  flex-wrap: wrap;
 }
+
 .export-buttons button {
   padding: 10px 16px;
   font-size: 0.95rem;
@@ -158,57 +157,7 @@ body.dark .styled-analysis {
   color: white;
   transition: background-color 0.3s ease;
 }
+
 .export-buttons button:hover {
   background-color: #0056b3;
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 600px) {
-  .resume-analyzer-container {
-    margin: 20px 10px;
-    padding: 20px 15px;
-  }
-
-  .header-bar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .title {
-    font-size: 1.5rem;
-    text-align: center;
-    width: 100%;
-  }
-
-  .toggle-btn {
-    align-self: flex-end;
-  }
-
-  .analyze-btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 1rem;
-  }
-
-  .export-buttons {
-    justify-content: center;
-  }
-
-  .export-buttons button {
-    width: 100%;
-  }
-
-  .resume-textarea {
-    min-height: 140px;
-    font-size: 0.95rem;
-  }
-
-  .drop-area {
-    padding: 15px;
-  }
-
-  .result-box {
-    padding: 16px;
-  }
 }

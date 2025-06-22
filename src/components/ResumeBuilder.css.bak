@@ -14,7 +14,6 @@ body {
   flex-wrap: wrap;
 }
 
-/* Form Panel */
 .form-panel {
   width: 300px;
   background: #fff;
@@ -51,7 +50,6 @@ button {
   cursor: pointer;
 }
 
-/* Resume Preview */
 .resume-preview {
   width: 700px;
   padding: 30px;
@@ -82,7 +80,6 @@ button {
 
 .resume-section {
   margin-bottom: 20px;
-  page-break-inside: avoid;
 }
 
 .resume-section h2 {
@@ -106,43 +103,7 @@ button {
 .resume-column ul {
   padding-left: 20px;
 }
-
-/* ===================== */
-/* 🔽 Responsive (Mobile) */
-/* ===================== */
-@media (max-width: 768px) {
-  .resume-builder-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .form-panel,
-  .resume-preview {
-    width: 90%;
-    padding: 20px;
-  }
-
-  .resume-header {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
-  }
-
-  .resume-row {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  button {
-    width: 100%;
-  }
-
-  textarea {
-    font-size: 0.95rem;
-  }
-
-  .resume-section h2 {
-    font-size: 16px;
-  }
+.resume-section {
+  margin-bottom: 20px;
+  page-break-inside: avoid;
 }
