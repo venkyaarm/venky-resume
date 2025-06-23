@@ -54,9 +54,6 @@ const Home = () => {
           <FaBrain className="icon" /> Analyze Resume
         </motion.button>
       </motion.div>
-
-      {/* ✅ Mobile-only score display */}
-      <div className="mobile-score">Score: 85 / 100</div>
     </main>
   );
 };
