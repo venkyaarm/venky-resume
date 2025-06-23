@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaFileAlt, FaBrain, FaMoon, FaSun } from 'react-icons/fa';
 import { motion } from 'framer-motion';
@@ -8,14 +8,14 @@ const Home = () => {
   const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(false);
 
-  useEffect(() => {
-    document.body.className = darkMode ? 'dark' : '';
-  }, [darkMode]);
-
   return (
     <main className={`home-container ${darkMode ? 'dark' : ''}`}>
       <div className="theme-toggle">
-        <button className="theme-button" onClick={() => setDarkMode(!darkMode)} aria-label="Toggle Dark Mode">
+        <button
+          className="theme-button"
+          onClick={() => setDarkMode(!darkMode)}
+          aria-label="Toggle Dark Mode"
+        >
           {darkMode ? <FaSun /> : <FaMoon />}
         </button>
       </div>
@@ -54,6 +54,9 @@ const Home = () => {
           <FaBrain className="icon" /> Analyze Resume
         </motion.button>
       </motion.div>
+
+      {/* ✅ Mobile-only score display */}
+      <div className="mobile-score">Score: 85 / 100</div>
     </main>
   );
 };

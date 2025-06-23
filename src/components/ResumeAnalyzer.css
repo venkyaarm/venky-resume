@@ -212,3 +212,173 @@ body.dark .styled-analysis {
     padding: 16px;
   }
 }
+.result-box {
+  padding: 20px;
+  max-width: 800px;
+  margin: 20px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.styled-analysis {
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  line-height: 1.6;
+  word-break: break-word;
+}
+.result-box.light {
+  background: #ffffff;
+  color: #000000;
+}
+/* Temporary style for better PDF contrast */
+.pdf-export-mode {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+.pdf-export-mode pre {
+  background: none !important;
+  color: #000000 !important;
+}
+/* PDF Export Overrides */
+.pdf-export-mode,
+.pdf-export-mode * {
+  background: #ffffff !important;
+  color: #000000 !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+/* Enhanced PDF Export Styling */
+.pdf-export-mode {
+  background: #ffffff !important;
+  color: #000000 !important;
+  font-weight: bold !important;
+  font-family: 'Arial', sans-serif !important;
+}
+
+.pdf-export-mode * {
+  background: #ffffff !important;
+  color: #000000 !important;
+  font-weight: bold !important;
+  font-family: 'Arial', sans-serif !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+.styled-analysis {
+  white-space: pre-wrap;
+  line-height: 1.6;
+  font-size: 1.05rem;
+  font-family: 'Segoe UI', sans-serif;
+  color: #1a1a1a; /* dark black */
+  font-weight: 600;
+}
+body.dark .styled-analysis {
+  color: #f8f8f8; /* Light text for dark mode */
+  font-weight: 600;
+}
+
+
+.resume-textarea {
+  width: 100%;
+  max-width: 900px;
+  height: 180px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  font-size: 1rem;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+.pdf-export-mode {
+  background: #ffffff !important;
+  color: #222 !important;
+  padding: 25px;
+  font-family: 'Segoe UI', sans-serif !important;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 700px;
+  margin: auto;
+}
+
+/* Headings in export (dark blue) */
+.pdf-export-mode h2 {
+  text-align: center;
+  color: #004080 !important;
+  margin-bottom: 16px;
+  font-size: 20px;
+  border-bottom: 2px solid #004080;
+  padding-bottom: 6px;
+}
+
+/* Content styling for export */
+.pdf-export-mode .styled-analysis {
+  font-size: 15px;
+  line-height: 1.75;
+  color: #333 !important;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Optional: Strong bullet titles like Key Strengths, etc. */
+.pdf-export-mode .styled-analysis::first-line {
+  font-weight: 600;
+  color: #111;
+}
+.resume-analyzer-container.light {
+  background-color: #f0f0f0;
+  color: #222;
+}
+
+.resume-analyzer-container.dark {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+/* Example: scoped textarea */
+.resume-analyzer-container textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.resume-analyzer-container.dark textarea {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+  border: 1px solid #444;
+}
+
+.resume-analyzer-container.light textarea {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+}
+/* Drop area - light mode */
+.resume-analyzer-container.light .drop-area {
+  background-color: #ffffff;
+  color: #222;
+  border: 2px dashed #007bff;
+}
+
+/* Drop area - dark mode */
+.resume-analyzer-container.dark .drop-area {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+  border: 2px dashed #66aaff;
+}
+
+/* File input text color */
+.resume-analyzer-container.dark input[type="file"] {
+  color: #f0f0f0;
+}
+
+.resume-analyzer-container.light input[type="file"] {
+  color: #222;
+}
+.drop-area {
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  transition: background-color 0.3s, color 0.3s;
+}

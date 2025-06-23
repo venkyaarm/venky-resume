@@ -15,8 +15,10 @@ const ResumeBuilder = () => {
     certifications: '',
     declaration: ''
   });
+
   const [photo, setPhoto] = useState(null);
   const [customSections, setCustomSections] = useState([]);
+  const [darkMode, setDarkMode] = useState(false);
   const resumeRef = useRef();
 
   const handleChange = (e) => {
@@ -44,32 +46,60 @@ const ResumeBuilder = () => {
   };
 
   const downloadPDF = async () => {
-    const canvas = await html2canvas(resumeRef.current);
+    const input = resumeRef.current;
+
+    // Temporarily set fixed width for A4 PDF
+    const originalWidth = input.style.width;
+    input.style.width = '794px'; // A4 width in px at 96dpi
+
+    await new Promise((res) => setTimeout(res, 100));
+
+    const canvas = await html2canvas(input, {
+      scale: 2,
+      useCORS: true,
+      windowWidth: 794
+    });
+
     const imgData = canvas.toDataURL('image/png');
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const width = pdf.internal.pageSize.getWidth();
-    const height = (canvas.height * width) / canvas.width;
-    pdf.addImage(imgData, 'PNG', 0, 0, width, height);
+    const pdf = new jsPDF('p', 'pt', 'a4');
+
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
     pdf.save('resume.pdf');
+
+    input.style.width = originalWidth;
   };
 
-  // Helper: Converts text to lines with line breaks
   const formatMultiline = (text) =>
     text.split('\n').map((line, idx) => (
       <p key={idx} style={{ margin: 0 }}>{line}</p>
     ));
 
-  // Helper: Converts text to bullets
   const formatBullets = (text) =>
     text.split('\n').map((line, idx) =>
       line.trim() ? <li key={idx}>{line.trim()}</li> : null
     );
 
   return (
-    <div className="resume-builder-container">
+    <div className={`resume-builder-container ${darkMode ? 'dark-mode' : ''}`}>
       <div className="form-panel">
         <h2>Fill Resume Details</h2>
+
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          style={{
+            background: darkMode ? '#f0f0f0' : '#333',
+            color: darkMode ? '#000' : '#fff',
+            marginBottom: '10px'
+          }}
+        >
+          {darkMode ? '☀Light Mode' : '🌙Dark Mode'}
+        </button>
+
         <input type="file" accept="image/*" onChange={handlePhotoUpload} />
+
         {Object.keys(form).map((key) => (
           <div className="input-group" key={key}>
             <label>{key.toUpperCase()}</label>
