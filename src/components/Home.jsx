@@ -17,7 +17,7 @@ const Home = () => {
         </button>
       </div>
       <h1 className="home-title">
-        <span className="floating">@Venky</span> <span className="gradient-text">Pro Resume App</span>
+        <span className="floating">🚀Venky</span> <span className="gradient-text">Pro Resume App</span>
       </h1>
       <div className="button-group">
         <button className="home-button" onClick={() => navigate('/create')}>
