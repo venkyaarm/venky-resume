@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaFileAlt, FaBrain, FaMoon, FaSun } from 'react-icons/fa';
 import { motion } from 'framer-motion';
@@ -8,8 +8,13 @@ const Home = () => {
   const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(false);
 
+  // Apply dark mode to the body tag
+  useEffect(() => {
+    document.body.classList.toggle('dark', darkMode);
+  }, [darkMode]);
+
   return (
-    <main className={`home-container ${darkMode ? 'dark' : ''}`}>
+    <main className="home-container">
       <div className="theme-toggle">
         <button
           className="theme-button"
