@@ -35,6 +35,7 @@ body {
 .floating {
   animation: float 2.5s ease-in-out infinite;
   display: inline-block;
+  color: red;
 }
 
 @keyframes float {
