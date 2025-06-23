@@ -1,89 +1,73 @@
-/* ========= Base Styles ========= */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  box-sizing: border-box;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .home-container {
-  width: 90%;
-  max-width: 500px;
-  padding: 40px 24px;
-  background: #f7f1ff;
-  border-radius: 20px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
   text-align: center;
-  transition: all 0.4s ease-in-out;
-  animation: fadeIn 0.7s ease-in-out;
+  padding: 60px 20px;
+  min-height: 10vh;
+  transition: background-color 0.3s ease-in-out, color 0.3s;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+.home-container.light {
+  background-color: #f4f6f8;
+  color: #000;
+}
+
+.home-container.dark {
+  background-color: #121212;
+  color: #f4f4f4;
 }
 
 .home-title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  line-height: 1.4;
-}
-
-.floating {
-  display: inline-block;
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  font-size: 2.8rem;
+  margin-bottom: 40px;
 }
 
 .gradient-text {
-  background: linear-gradient(90deg, #ff6a00, #ee0979);
+  background: linear-gradient(to right, #4facfe, #00f2fe);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
+.floating {
+  animation: float 2.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
 .button-group {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-top: 20px;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .home-button {
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 12px;
-  padding: 12px 20px;
-  font-size: 16px;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.3s, background-color 0.3s;
-  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+  transition: background-color 0.3s;
 }
 
 .home-button:hover {
   background-color: #0056b3;
-}
-
-.icon {
-  margin-right: 8px;
-  transition: transform 0.3s;
-}
-
-.home-button:hover .icon {
-  transform: scale(1.2);
 }
 
 .theme-toggle {
@@ -94,86 +78,18 @@ body {
 
 .theme-button {
   background: none;
-  border: none;
-  font-size: 24px;
-  color: #333;
+  border: 2px solid currentColor;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 1rem;
   cursor: pointer;
-  transition: color 0.3s;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s;
 }
 
 .theme-button:hover {
-  color: #007bff;
-}
-
-/* ========= Dark Mode ========= */
-body.dark {
-  background-color: #121212;
-  color: #fff;
-}
-
-body.dark .home-container {
-  background-color: #1e1e2e;
-  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.05);
-}
-
-body.dark .home-button {
-  background-color: #333;
-  color: #fff;
-  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
-}
-
-body.dark .home-button:hover {
-  background-color: #555;
-}
-
-body.dark .theme-button {
-  color: #fff;
-}
-
-body.dark .gradient-text {
-  background: linear-gradient(90deg, #84fab0, #8fd3f4);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* ========= Mobile Styles ========= */
-@media (max-width: 480px) {
-  .home-container {
-    padding: 28px 16px;
-    border-radius: 16px;
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .home-title {
-    font-size: 1.5rem;
-    margin-bottom: 14px;
-  }
-
-  .home-button {
-    font-size: 15px;
-    padding: 10px 16px;
-    border-radius: 10px;
-    flex-wrap: wrap;
-  }
-
-  .icon {
-    margin-right: 6px;
-  }
-
-  .theme-toggle {
-    top: 15px;
-    right: 15px;
-  }
-
-  .theme-button {
-    font-size: 20px;
-  }
-
-  .button-group {
-    gap: 12px;
-    margin-top: 18px;
-  }
-
-  
+  background-color: rgba(0, 0, 0, 0.1);
 }
