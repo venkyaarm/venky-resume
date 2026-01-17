@@ -1,183 +1,333 @@
-import React, { useState, useRef } from 'react';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
-import './ResumeBuilder.css';
+import React, { useState, useRef } from "react";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import "./ResumeBuilder.css";
 
-const ResumeBuilder = () => {
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    summary: '',
-    education: '',
-    skills: '',
-    languages: '',
-    certifications: '',
-    declaration: ''
-  });
-
-  const [photo, setPhoto] = useState(null);
-  const [customSections, setCustomSections] = useState([]);
-  const [darkMode, setDarkMode] = useState(false);
+export default function ResumeBuilder() {
   const resumeRef = useRef();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-  };
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    summary: "",
+    experience: "",
+    certifications: "",
+    declaration: "",
+  });
 
-  const handlePhotoUpload = (e) => {
-    const reader = new FileReader();
-    reader.onload = () => setPhoto(reader.result);
-    reader.readAsDataURL(e.target.files[0]);
-  };
+  const [education, setEducation] = useState([
+    { qualification: "", year: "", score: "" },
+  ]);
 
-  const handleCustomChange = (index, value) => {
-    const updated = [...customSections];
-    updated[index].content = value;
-    setCustomSections(updated);
-  };
+  const [skills, setSkills] = useState([]);
+  const [languages, setLanguages] = useState([]);
+  const [skillInput, setSkillInput] = useState("");
+  const [langInput, setLangInput] = useState("");
 
-  const addCustomSection = () => {
-    const heading = prompt('Enter section heading:');
-    if (heading) {
-      setCustomSections([...customSections, { heading, content: '' }]);
+  const [customSections, setCustomSections] = useState([]);
+
+  /* ---------------- HANDLERS ---------------- */
+
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
+
+  /* SKILLS */
+  const addSkill = () => {
+    if (skillInput.trim()) {
+      setSkills([...skills, skillInput.trim()]);
+      setSkillInput("");
     }
   };
 
-  const downloadPDF = async () => {
-    const input = resumeRef.current;
+  const removeSkill = (i) =>
+    setSkills(skills.filter((_, index) => index !== i));
 
-    // Temporarily set fixed width for A4 PDF
-    const originalWidth = input.style.width;
-    input.style.width = '794px'; // A4 width in px at 96dpi
-
-    await new Promise((res) => setTimeout(res, 100));
-
-    const canvas = await html2canvas(input, {
-      scale: 2,
-      useCORS: true,
-      windowWidth: 794
-    });
-
-    const imgData = canvas.toDataURL('image/png');
-    const pdf = new jsPDF('p', 'pt', 'a4');
-
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    pdf.save('resume.pdf');
-
-    input.style.width = originalWidth;
+  /* LANGUAGES */
+  const addLanguage = () => {
+    if (langInput.trim()) {
+      setLanguages([...languages, langInput.trim()]);
+      setLangInput("");
+    }
   };
 
-  const formatMultiline = (text) =>
-    text.split('\n').map((line, idx) => (
-      <p key={idx} style={{ margin: 0 }}>{line}</p>
-    ));
+  const removeLanguage = (i) =>
+    setLanguages(languages.filter((_, index) => index !== i));
 
-  const formatBullets = (text) =>
-    text.split('\n').map((line, idx) =>
-      line.trim() ? <li key={idx}>{line.trim()}</li> : null
-    );
+  /* EDUCATION */
+  const updateEducation = (i, field, value) => {
+    const updated = [...education];
+    updated[i][field] = value;
+    setEducation(updated);
+  };
+
+  const addEducation = () =>
+    setEducation([...education, { qualification: "", year: "", score: "" }]);
+
+  /* CUSTOM SECTIONS */
+  const addCustomSection = () => {
+    const title = prompt("Enter section title (Projects, Achievements, etc.)");
+    if (title) {
+      setCustomSections([
+        ...customSections,
+        { title, description: "" },
+      ]);
+    }
+  };
+
+  const updateCustomSection = (i, value) => {
+    const updated = [...customSections];
+    updated[i].description = value;
+    setCustomSections(updated);
+  };
+
+  /* PDF */
+  const downloadPDF = async () => {
+    const canvas = await html2canvas(resumeRef.current, {
+      scale: 3,
+      backgroundColor: "#ffffff",
+    });
+
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
+
+    const pdfWidth = 210;
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save(`${form.name || "Resume"}.pdf`);
+  };
+
+  const hasEducation = education.some(
+    (e) => e.qualification || e.year || e.score
+  );
 
   return (
-    <div className={`resume-builder-container ${darkMode ? 'dark-mode' : ''}`}>
-      <div className="form-panel">
-        <h2>Fill Resume Details</h2>
+    <div className="rb-container">
+      {/* LEFT – BUILDER */}
+      <div className="rb-form">
+        <h2>Professional Resume Builder</h2>
 
-        <button
-          onClick={() => setDarkMode(!darkMode)}
-          style={{
-            background: darkMode ? '#f0f0f0' : '#333',
-            color: darkMode ? '#000' : '#fff',
-            marginBottom: '10px'
-          }}
-        >
-          {darkMode ? '☀Light Mode' : '🌙Dark Mode'}
+        <section>
+          <label>Full Name</label>
+          <input name="name" onChange={handleChange} />
+
+          <label>Email</label>
+          <input name="email" onChange={handleChange} />
+
+          <label>Phone</label>
+          <input name="phone" onChange={handleChange} />
+
+          <label>Location</label>
+          <input name="address" onChange={handleChange} />
+        </section>
+
+        <section>
+          <label>Professional Summary</label>
+          <textarea name="summary" onChange={handleChange} />
+        </section>
+
+        {/* SKILLS */}
+        <section>
+          <label>Skills</label>
+          <div className="inline-input">
+            <input
+              value={skillInput}
+              onChange={(e) => setSkillInput(e.target.value)}
+              placeholder="Add skill"
+            />
+            <button onClick={addSkill}>Add</button>
+          </div>
+
+          <div className="chip-list">
+            {skills.map((s, i) => (
+              <span key={i} className="chip" onClick={() => removeSkill(i)}>
+                {s} ✕
+              </span>
+            ))}
+          </div>
+        </section>
+
+        {/* LANGUAGES */}
+        <section>
+          <label>Languages</label>
+          <div className="inline-input">
+            <input
+              value={langInput}
+              onChange={(e) => setLangInput(e.target.value)}
+              placeholder="Add language"
+            />
+            <button onClick={addLanguage}>Add</button>
+          </div>
+
+          <div className="chip-list">
+            {languages.map((l, i) => (
+              <span key={i} className="chip" onClick={() => removeLanguage(i)}>
+                {l} ✕
+              </span>
+            ))}
+          </div>
+        </section>
+
+        {/* EXPERIENCE */}
+        <section>
+          <label>Experience / Projects / Internships</label>
+          <textarea
+            name="experience"
+            placeholder="Write each point in a new line"
+            onChange={handleChange}
+          />
+        </section>
+
+        {/* EDUCATION */}
+        <section>
+          <label>Education</label>
+          {education.map((edu, i) => (
+            <div key={i} className="edu-row">
+              <input
+                placeholder="Qualification"
+                onChange={(e) =>
+                  updateEducation(i, "qualification", e.target.value)
+                }
+              />
+              <input
+                placeholder="Year"
+                onChange={(e) =>
+                  updateEducation(i, "year", e.target.value)
+                }
+              />
+              <input
+                placeholder="Score"
+                onChange={(e) =>
+                  updateEducation(i, "score", e.target.value)
+                }
+              />
+            </div>
+          ))}
+          <button onClick={addEducation}>Add Education</button>
+        </section>
+
+        {/* CUSTOM SECTIONS */}
+        <section>
+          <button onClick={addCustomSection}>➕ Add New Section</button>
+
+          {customSections.map((sec, i) => (
+            <textarea
+              key={i}
+              placeholder={`Describe ${sec.title}`}
+              onChange={(e) => updateCustomSection(i, e.target.value)}
+            />
+          ))}
+        </section>
+
+        <section>
+          <label>Certifications</label>
+          <textarea name="certifications" onChange={handleChange} />
+        </section>
+
+        <section>
+          <label>Declaration</label>
+          <textarea name="declaration" onChange={handleChange} />
+        </section>
+
+        <button className="download" onClick={downloadPDF}>
+          Download PDF
         </button>
-
-        <input type="file" accept="image/*" onChange={handlePhotoUpload} />
-
-        {Object.keys(form).map((key) => (
-          <div className="input-group" key={key}>
-            <label>{key.toUpperCase()}</label>
-            <textarea
-              name={key}
-              value={form[key]}
-              onChange={handleChange}
-              rows={key === 'summary' || key === 'declaration' ? 4 : 2}
-            />
-          </div>
-        ))}
-
-        {customSections.map((sec, idx) => (
-          <div className="input-group" key={idx}>
-            <label>{sec.heading}</label>
-            <textarea
-              value={sec.content}
-              onChange={(e) => handleCustomChange(idx, e.target.value)}
-              rows={3}
-            />
-          </div>
-        ))}
-
-        <button onClick={downloadPDF}>📄 Download PDF</button>
-        <button onClick={addCustomSection}>➕ Add Section</button>
       </div>
 
-      <div className="resume-preview" ref={resumeRef}>
-        <div className="resume-header">
-          {photo && <img src={photo} alt="Profile" className="profile-img" />}
-          <div>
-            <h1 className="name">{form.name || 'Your Name'}</h1>
-            <p>{form.email}</p>
-            <p>{form.phone}</p>
-          </div>
-        </div>
+      {/* RIGHT – LIVE PREVIEW */}
+      <div className="preview">
+        <div className="resume" ref={resumeRef}>
+          {(form.name || form.email || form.phone || form.address) && (
+            <header>
+              {form.name && <h1>{form.name}</h1>}
+              <p>
+                {[form.email, form.phone, form.address]
+                  .filter(Boolean)
+                  .join(" | ")}
+              </p>
+            </header>
+          )}
 
-        <div className="resume-section">
-          <h2>Professional Summary</h2>
-          {formatMultiline(form.summary)}
-        </div>
+          {form.summary && (
+            <section>
+              <h2>Professional Summary</h2>
+              <p>{form.summary}</p>
+            </section>
+          )}
 
-        <div className="resume-section">
-          <h2>Education</h2>
-          {formatMultiline(form.education)}
-        </div>
+          {skills.length > 0 && (
+            <section>
+              <h2>Skills</h2>
+              <ul className="multi-column">
+                {skills.map((s, i) => (
+                  <li key={i}>{s}</li>
+                ))}
+              </ul>
+            </section>
+          )}
 
-        <div className="resume-row">
-          <div className="resume-column">
-            <h2>Skills</h2>
-            <ul>{formatBullets(form.skills)}</ul>
-          </div>
-          <div className="resume-column">
-            <h2>Languages</h2>
-            <ul>{formatBullets(form.languages)}</ul>
-          </div>
-        </div>
+          {languages.length > 0 && (
+            <section>
+              <h2>Languages</h2>
+              <ul className="multi-column">
+                {languages.map((l, i) => (
+                  <li key={i}>{l}</li>
+                ))}
+              </ul>
+            </section>
+          )}
 
-        <div className="resume-row">
-          <div className="resume-column">
-            <h2>Certifications</h2>
-            {formatMultiline(form.certifications)}
-          </div>
-          <div className="resume-column">
-            <h2>Declaration</h2>
-            {formatMultiline(form.declaration)}
-          </div>
-        </div>
+          {form.experience && (
+  <section>
+    <h2>Experience</h2>
+    <p className="experience-text">{form.experience}</p>
+  </section>
+)}
 
-        {customSections.map((sec, idx) => (
-          <div className="resume-section" key={idx}>
-            <h2>{sec.heading}</h2>
-            {formatMultiline(sec.content)}
-          </div>
-        ))}
+
+          {customSections.map(
+            (sec, i) =>
+              sec.description && (
+                <section key={i}>
+                  <h2>{sec.title}</h2>
+                  <p>{sec.description}</p>
+                </section>
+              )
+          )}
+
+          {hasEducation && (
+            <section>
+              <h2>Education</h2>
+              {education.map(
+                (edu, i) =>
+                  (edu.qualification || edu.year || edu.score) && (
+                    <p key={i}>
+                      <strong>{edu.qualification}</strong>
+                      {edu.year && ` (${edu.year})`}
+                      {edu.score && ` - ${edu.score}`}
+                    </p>
+                  )
+              )}
+            </section>
+          )}
+
+          {form.certifications && (
+            <section>
+              <h2>Certifications</h2>
+              <p>{form.certifications}</p>
+            </section>
+          )}
+
+          {form.declaration && (
+            <section>
+              <h2>Declaration</h2>
+              <p>{form.declaration}</p>
+            </section>
+          )}
+        </div>
       </div>
     </div>
   );
-};
-
-export default ResumeBuilder;
+}

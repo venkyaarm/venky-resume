@@ -1,42 +1,118 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+* {
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+/* MAIN CONTAINER */
+.home-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0f2fe, #f8fafc);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  padding: 20px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* TITLE */
+.home-title {
+  margin-bottom: 10px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.brand-name {
+  display: block;
+  font-size: 36px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.brand-sub {
+  display: block;
+  font-size: 28px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #4f46e5, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* SUBTITLE */
+.home-subtitle {
+  max-width: 520px;
+  font-size: 15.5px;
+  color: #475569;
+  margin: 12px 0 30px;
+  line-height: 1.6;
+}
+
+/* BUTTON GROUP */
+.button-group {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* BUTTONS */
+.home-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 22px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* PRIMARY */
+.home-button.primary {
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: #ffffff;
+  box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+}
+
+/* SECONDARY */
+.home-button.secondary {
+  background: #ffffff;
+  color: #1e293b;
+  border: 1px solid #c7d2fe;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+/* HOVER */
+.home-button:hover {
+  transform: translateY(-2px);
+}
+
+/* FOOTER */
+.home-footer {
+  position: absolute;
+  bottom: 16px;
+  font-size: 12.5px;
+  color: #64748b;
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
+  .brand-name {
+    font-size: 30px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .brand-sub {
+    font-size: 22px;
   }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .home-button {
+    width: 100%;
+    justify-content: center;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }

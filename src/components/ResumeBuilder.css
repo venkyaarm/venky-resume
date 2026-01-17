@@ -1,213 +1,312 @@
-/* ========================== */
-/* 💻 Base + Desktop View CSS */
-/* ========================== */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+* {
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
 
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #f4f6f8;
   margin: 0;
-  padding: 20px;
-  color: #000;
-  transition: background-color 0.3s, color 0.3s;
 }
 
-.resume-builder-container {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: nowrap;
+/* MAIN LAYOUT */
+.rb-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
 }
 
-/* Form Panel */
-.form-panel {
-  width: 360px; /* increased width for desktop */
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  transition: background 0.3s, color 0.3s;
+/* LEFT PANEL */
+.rb-form {
+  padding: 30px;
+  overflow-y: auto;
+  background: #f8fafc;
+  border-right: 1px solid #e5e7eb;
 }
 
-.input-group {
-  margin-bottom: 15px;
+.rb-form h2 {
+  position: sticky;
+  top: 0;
+  background: #f8fafc;
+  padding-bottom: 10px;
+  z-index: 10;
 }
 
-.input-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: inherit;
+.rb-form section {
+  margin-bottom: 22px;
 }
 
-textarea {
+.rb-form label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.rb-form input,
+.rb-form textarea {
   width: 100%;
+  margin-top: 6px;
   padding: 10px;
   border-radius: 6px;
-  border: 1px solid #ccc;
-  resize: vertical;
-  background: #fff;
-  color: #000;
-  transition: background 0.3s, color 0.3s;
+  border: 1px solid #cbd5e1;
 }
 
-button {
-  padding: 10px 15px;
-  margin-top: 10px;
-  background: #007bff;
-  color: #fff;
+.rb-form textarea {
+  min-height: 80px;
+}
+
+.inline-input {
+  display: flex;
+  gap: 8px;
+}
+
+.inline-input button,
+.rb-form button {
+  background: #4f46e5;
+  color: white;
   border: none;
+  padding: 10px 14px;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s, color 0.3s;
 }
 
-/* Resume Preview */
-.resume-preview {
-  max-width: 900px; /* increased width for desktop */
+.edu-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.download {
   width: 100%;
+  font-size: 15px;
+}
+
+/* RIGHT PANEL */
+.preview {
+  background: #e5e7eb;
   padding: 30px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
-  transition: background 0.3s, color 0.3s;
-}
-
-.resume-header {
+  overflow-y: auto;
   display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 30px;
+  justify-content: center;
 }
 
-.profile-img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #007bff;
+/* RESUME */
+.resume {
+  width: 210mm;
+  min-height: 297mm;
+  background: white;
+  padding: 35px;
+  color: #000;
 }
 
-.name {
-  color: #007bff;
+/* HEADINGS */
+.resume header {
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 16px;
+}
+
+.resume h1 {
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+
+.resume h2 {
+  font-size: 14.5px;
+  margin-top: 18px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* TEXT */
+.resume p,
+.resume li {
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+/* MULTI COLUMN BULLETS */
+.multi-column {
+  columns: 2;
+  column-gap: 40px;
+  padding-left: 18px;
+  margin-top: 6px;
+}
+
+.multi-column li {
+  break-inside: avoid;
+  margin-bottom: 6px;
+}
+
+/* LIST RESET */
+.resume ul {
   margin: 0;
 }
-
-.resume-section {
-  margin-bottom: 20px;
-  page-break-inside: avoid;
-}
-
-.resume-section h2 {
-  font-size: 18px;
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 10px;
-  color: #222;
-}
-
-.resume-row {
+/* SKILL / LANGUAGE CHIPS */
+.chip-list {
+  margin-top: 8px;
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
-.resume-column {
-  flex: 1;
+.chip {
+  background: #e0e7ff;
+  color: #3730a3;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  cursor: pointer;
+}
+/* =============================== */
+/* 🚫 TEXT OVERFLOW FIX (GLOBAL) */
+/* =============================== */
+
+/* Force text to wrap properly */
+.resume p,
+.resume li,
+.resume h1,
+.resume h2 {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
 }
 
-.resume-column ul {
-  padding-left: 20px;
+/* Prevent horizontal overflow */
+.resume {
+  overflow-x: hidden;
 }
 
-/* 🌙 Dark Mode Styles */
-.resume-builder-container.dark-mode {
-  background: #121212;
-  color: #f0f0f0;
+/* Experience & summary text wrapping */
+.resume section p {
+  white-space: normal;
 }
-.resume-builder-container.dark-mode .form-panel,
-.resume-builder-container.dark-mode .resume-preview {
-  background: #1e1e1e;
-  color: #f0f0f0;
+
+/* Multi-column list safety */
+.multi-column li {
+  white-space: normal;
 }
-.resume-builder-container.dark-mode textarea {
-  background: #2c2c2c;
-  color: #f0f0f0;
-  border: 1px solid #555;
-}
-.resume-builder-container.dark-mode .resume-section h2 {
-  color: #ffffff;
-  border-color: #444;
-}
-.resume-builder-container.dark-mode .name {
-  color: #66aaff;
-}
-.resume-builder-container.dark-mode .input-group label {
-  color: #ddd;
-}
-.resume-builder-container.dark-mode button {
-  background: #3399ff;
-  color: #fff;
+
+/* Custom section textareas (builder side) */
+.rb-form textarea {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: pre-wrap;
 }
 
 /* ============================= */
-/* 📱 Responsive Mobile View CSS */
+/* 📱 MOBILE VIEW (≤ 480px) */
 /* ============================= */
-@media (max-width: 768px) {
-  .resume-builder-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
+
+@media (max-width: 480px) {
+
+  /* STACK LAYOUT */
+  .rb-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    height: auto;
   }
 
-  .form-panel,
-  .resume-preview {
-    width: 90%;
+  /* BUILDER ON TOP */
+  .rb-form {
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
     padding: 20px;
   }
 
-  .resume-header {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
+  .rb-form h2 {
+    position: relative; /* disable sticky on mobile */
   }
 
-  .resume-row {
-    flex-direction: column;
-    gap: 10px;
+  /* PREVIEW AT BOTTOM */
+  .preview {
+    padding: 15px;
+    justify-content: flex-start;
   }
 
-  button {
+  /* SCALE RESUME TO MOBILE */
+  .resume {
+    width: 100%;
+    min-height: auto;
+    padding: 20px;
+    transform: scale(0.95);
+    transform-origin: top center;
+  }
+
+  /* TEXT ADJUSTMENTS */
+  .resume h1 {
+    font-size: 22px;
+  }
+
+  .resume h2 {
+    font-size: 13px;
+  }
+
+  .resume p,
+  .resume li {
+    font-size: 12.5px;
+  }
+
+  /* MULTI-COLUMN → SINGLE COLUMN ON MOBILE */
+  .multi-column {
+    columns: 1;
+    padding-left: 16px;
+  }
+
+  /* EDUCATION ROW STACK */
+  .edu-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* BUTTONS FULL WIDTH */
+  .inline-input button,
+  .rb-form button {
     width: 100%;
   }
 
-  textarea {
-    font-size: 0.95rem;
-  }
-
-  .resume-section h2 {
-    font-size: 16px;
+  .inline-input {
+    flex-direction: column;
   }
 }
-.resume-preview,
-.resume-preview * {
-  word-wrap: break-word;
+/* =============================== */
+/* ✅ PROFESSIONAL MULTI-COLUMN */
+/* =============================== */
+
+.multi-column {
+  columns: 2;
+  column-gap: 36px;
+  padding-left: 0;
+  margin-top: 6px;
+}
+
+.multi-column li {
+  list-style-position: outside;
+  margin-left: 18px;
+  padding-left: 6px;
+
+  break-inside: avoid;
+  margin-bottom: 8px;
+
+  /* TEXT CONTROL */
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+
+  line-height: 1.5;
+}
+.resume ul {
+  padding-left: 0;
+  margin-left: 0;
+}
+/* EXPERIENCE SAME AS SUMMARY */
+.experience-text {
+  white-space: pre-wrap;
   overflow-wrap: break-word;
   word-break: break-word;
-}
-.resume-preview p {
-  max-width: 100%;
-  overflow-wrap: break-word;
-}
-.resume-preview p {
-  white-space: pre-wrap;
-}
-.resume-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-.resume-column {
-  flex: 1;
+  line-height: 1.6;
 }

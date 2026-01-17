@@ -1,47 +1,127 @@
-body {
+/* ============================= */
+/* GLOBAL RESET & BASE STYLES */
+/* ============================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #89f7fe, #66a6ff);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 0;
 }
 
-.home-container {
-  text-align: center;
-  padding: 50px;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
-  animation: float 3s ease-in-out infinite;
+html,
+body {
+  height: 100%;
 }
 
-.home-title {
-  font-size: 2.5rem;
-  margin-bottom: 40px;
-  color: #333;
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #ffffff;
+  color: #0f172a;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.home-button {
-  padding: 15px 30px;
-  font-size: 1.2rem;
-  margin: 20px;
-  border: none;
-  border-radius: 10px;
+/* ============================= */
+/* LINKS & BUTTONS */
+/* ============================= */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
   cursor: pointer;
-  background-color: #4b6cb7;
-  color: white;
-  transition: transform 0.3s;
+  border: none;
+  outline: none;
+  background: none;
 }
 
-.home-button:hover {
-  background-color: #182848;
-  transform: scale(1.1);
+/* ============================= */
+/* FORM ELEMENTS */
+/* ============================= */
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: 14px;
+  color: #0f172a;
+  outline: none;
 }
 
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0); }
+textarea {
+  resize: vertical;
+}
+
+/* ============================= */
+/* LISTS */
+/* ============================= */
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* ============================= */
+/* IMAGES */
+/* ============================= */
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ============================= */
+/* UTILITY CLASSES */
+/* ============================= */
+
+.hidden {
+  display: none !important;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* ============================= */
+/* SCROLLBAR (SUBTLE) */
+/* ============================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c7d2fe;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a5b4fc;
+}
+
+/* ============================= */
+/* SELECTION */
+/* ============================= */
+
+::selection {
+  background: #c7d2fe;
+  color: #1e293b;
 }
