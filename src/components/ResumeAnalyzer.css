@@ -1,384 +1,165 @@
-/* Light & Dark Mode Base */
-body.light {
-  background-color: #f0f0f0;
-  color: #2c3e50;
-}
-body.dark {
-  background-color: #1e1e1e;
-  color: #f0f0f0;
+/* 🌟 GLOBAL */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #0f172a, #020617);
 }
 
-/* Container */
+/* 🌟 MAIN CONTAINER */
 .resume-analyzer-container {
-  max-width: 800px;
-  margin: 40px auto;
+  min-height: 100vh;
   padding: 30px;
-  border-radius: 16px;
-  font-family: "Segoe UI", sans-serif;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  transition: background 0.3s, color 0.3s;
-}
-.resume-analyzer-container.light {
-  background: linear-gradient(to right, #e0f7fa, #ffffff);
-}
-.resume-analyzer-container.dark {
-  background: linear-gradient(to right, #2c3e50, #34495e);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #e5e7eb;
 }
 
-/* Header */
+.resume-analyzer-container.light {
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+  color: #020617;
+}
+
+/* 🌟 HEADER */
 .header-bar {
+  width: 100%;
+  max-width: 1100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(14px);
+  padding: 18px 30px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
 }
-.title {
-  font-size: 2rem;
-  animation: float 3s ease-in-out infinite;
+
+.header-bar h1 {
+  font-size: 1.8rem;
+  background: linear-gradient(90deg, #22d3ee, #6366f1);
+  -webkit-background-clip: text;
+  color: transparent;
 }
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0px); }
-}
-.toggle-btn {
-  background-color: #444;
-  color: #fff;
-  padding: 10px 16px;
-  border-radius: 6px;
+
+.header-bar button {
+  background: linear-gradient(90deg, #6366f1, #22d3ee);
   border: none;
-  cursor: pointer;
-}
-.toggle-btn:hover {
-  background-color: #222;
-}
-
-/* Drop Area */
-.drop-area {
-  border: 2px dashed #007bff;
-  padding: 20px;
+  padding: 10px 18px;
   border-radius: 12px;
-  margin-bottom: 20px;
-  background-color: #f9f9f9;
-  transition: background-color 0.3s ease;
-}
-.drop-area.dragging {
-  background-color: #d0f0ff;
-}
-body.dark .drop-area {
-  background-color: #2e3b4e;
-  border-color: #66b2ff;
-}
-body.dark .drop-area.dragging {
-  background-color: #3e4b5e;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
 }
 
-/* Textarea */
-.resume-textarea {
+/* 🌟 UPLOAD SECTION */
+.upload-box {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
   width: 100%;
-  min-height: 160px;
-  padding: 15px;
+  max-width: 1100px;
+}
+
+.drop-area {
+  flex: 1;
+  border: 2px dashed rgba(255,255,255,0.3);
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+  background: rgba(255,255,255,0.06);
+  transition: 0.3s;
+}
+
+.drop-area.dragging {
+  background: rgba(34,211,238,0.15);
+  border-color: #22d3ee;
+}
+
+.drop-area input {
+  margin-top: 15px;
+}
+
+/* 🌟 TEXT AREA */
+textarea {
+  flex: 1;
+  min-height: 220px;
+  border-radius: 16px;
+  border: none;
+  padding: 20px;
   font-size: 1rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  margin-bottom: 20px;
-  resize: vertical;
+  color: white;
+  resize: none;
   outline: none;
 }
-body.dark .resume-textarea {
-  background-color: #1c1c1c;
-  color: #ffffff;
-  border: 1px solid #555;
-}
 
-/* Analyze Button */
-.analyze-btn {
-  background-color: #007bff;
-  color: white;
-  padding: 14px 26px;
-  font-size: 1rem;
+/* 🌟 BUTTON */
+button {
+  margin-top: 25px;
+  background: linear-gradient(90deg, #22d3ee, #6366f1);
   border: none;
-  border-radius: 8px;
+  padding: 14px 28px;
+  border-radius: 14px;
+  color: blue;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.analyze-btn:hover {
-  background-color: #0056b3;
+  font-weight: bold;
+  box-shadow: 0 10px 30px rgba(99,102,241,0.5);
 }
 
-/* Result Box */
+button:hover {
+  transform: scale(1.05);
+}
+
+/* 🌟 RESULT BOX */
 .result-box {
+  width: 100%;
+  max-width: 1100px;
   margin-top: 30px;
-  background: #ffffff;
-  border: 1px solid #ddd;
-  padding: 20px;
-  border-radius: 12px;
-  text-align: left;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(14px);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
 }
-.result-box h2 {
-  color: #34495e;
-  margin-bottom: 10px;
-}
-body.dark .result-box {
-  background-color: #2a2a2a;
-  border-color: #555;
-}
-body.dark .result-box h2 {
-  color: #ffffff;
-}
-.styled-analysis {
+
+.result-box pre {
   white-space: pre-wrap;
-  line-height: 1.6;
-  font-size: 1.05rem;
-  font-family: 'Segoe UI', sans-serif;
-  color: #2c3e50;
-}
-body.dark .styled-analysis {
-  color: #ffffff;
-}
-
-/* Export Buttons */
-.export-buttons {
-  margin-top: 20px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.export-buttons button {
-  padding: 10px 16px;
-  font-size: 0.95rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background-color: #007bff;
-  color: white;
-  transition: background-color 0.3s ease;
-}
-.export-buttons button:hover {
-  background-color: #0056b3;
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 600px) {
-  .resume-analyzer-container {
-    margin: 20px 10px;
-    padding: 20px 15px;
-  }
-
-  .header-bar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .title {
-    font-size: 1.5rem;
-    text-align: center;
-    width: 100%;
-  }
-
-  .toggle-btn {
-    align-self: flex-end;
-  }
-
-  .analyze-btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 1rem;
-  }
-
-  .export-buttons {
-    justify-content: center;
-  }
-
-  .export-buttons button {
-    width: 100%;
-  }
-
-  .resume-textarea {
-    min-height: 140px;
-    font-size: 0.95rem;
-  }
-
-  .drop-area {
-    padding: 15px;
-  }
-
-  .result-box {
-    padding: 16px;
-  }
-}
-.result-box {
-  padding: 20px;
-  max-width: 800px;
-  margin: 20px auto;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.styled-analysis {
-  font-family: 'Courier New', monospace;
-  white-space: pre-wrap;
-  line-height: 1.6;
-  word-break: break-word;
-}
-.result-box.light {
-  background: #ffffff;
-  color: #000000;
-}
-/* Temporary style for better PDF contrast */
-.pdf-export-mode {
-  background: #ffffff !important;
-  color: #000000 !important;
-}
-
-.pdf-export-mode pre {
-  background: none !important;
-  color: #000000 !important;
-}
-/* PDF Export Overrides */
-.pdf-export-mode,
-.pdf-export-mode * {
-  background: #ffffff !important;
-  color: #000000 !important;
-  -webkit-print-color-adjust: exact !important;
-  print-color-adjust: exact !important;
-}
-/* Enhanced PDF Export Styling */
-.pdf-export-mode {
-  background: #ffffff !important;
-  color: #000000 !important;
-  font-weight: bold !important;
-  font-family: 'Arial', sans-serif !important;
-}
-
-.pdf-export-mode * {
-  background: #ffffff !important;
-  color: #000000 !important;
-  font-weight: bold !important;
-  font-family: 'Arial', sans-serif !important;
-  -webkit-print-color-adjust: exact !important;
-  print-color-adjust: exact !important;
-}
-.styled-analysis {
-  white-space: pre-wrap;
-  line-height: 1.6;
-  font-size: 1.05rem;
-  font-family: 'Segoe UI', sans-serif;
-  color: #1a1a1a; /* dark black */
-  font-weight: 600;
-}
-body.dark .styled-analysis {
-  color: #f8f8f8; /* Light text for dark mode */
-  font-weight: 600;
-}
-
-
-.resume-textarea {
-  width: 100%;
-  max-width: 900px;
-  height: 180px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 15px;
+  line-height: 1.7;
   font-size: 1rem;
-  line-height: 1.5;
-  box-sizing: border-box;
-}
-.pdf-export-mode {
-  background: #ffffff !important;
-  color: #222 !important;
-  padding: 25px;
-  font-family: 'Segoe UI', sans-serif !important;
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 700px;
-  margin: auto;
+  color: #e5e7eb;
 }
 
-/* Headings in export (dark blue) */
-.pdf-export-mode h2 {
-  text-align: center;
-  color: #004080 !important;
-  margin-bottom: 16px;
-  font-size: 20px;
-  border-bottom: 2px solid #004080;
-  padding-bottom: 6px;
+/* 🌟 EXPORT BUTTONS */
+.export-buttons {
+  display: flex;
+  gap: 20px;
 }
 
-/* Content styling for export */
-.pdf-export-mode .styled-analysis {
-  font-size: 15px;
-  line-height: 1.75;
-  color: #333 !important;
-  white-space: pre-wrap;
-  word-break: break-word;
+.export-buttons button {
+  background: linear-gradient(90deg, #16a34a, #22c55e);
+  box-shadow: 0 10px 30px rgba(34,197,94,0.5);
 }
 
-/* Optional: Strong bullet titles like Key Strengths, etc. */
-.pdf-export-mode .styled-analysis::first-line {
-  font-weight: 600;
-  color: #111;
-}
-.resume-analyzer-container.light {
-  background-color: #f0f0f0;
-  color: #222;
-}
-
-.resume-analyzer-container.dark {
-  background-color: #121212;
-  color: #f0f0f0;
+/* 🌟 LIGHT MODE */
+.light .header-bar,
+.light .drop-area,
+.light textarea,
+.light .result-box {
+  background: rgba(0,0,0,0.05);
+  color: #020617;
 }
 
-/* Example: scoped textarea */
-.resume-analyzer-container textarea {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 10px;
+.light textarea {
+  color: #020617;
 }
 
-.resume-analyzer-container.dark textarea {
-  background-color: #1e1e1e;
-  color: #f0f0f0;
-  border: 1px solid #444;
+.light .result-box pre {
+  color: #020617;
 }
 
-.resume-analyzer-container.light textarea {
-  background-color: #fff;
-  color: #000;
-  border: 1px solid #ccc;
-}
-/* Drop area - light mode */
-.resume-analyzer-container.light .drop-area {
-  background-color: #ffffff;
-  color: #222;
-  border: 2px dashed #007bff;
-}
-
-/* Drop area - dark mode */
-.resume-analyzer-container.dark .drop-area {
-  background-color: #1e1e1e;
-  color: #f0f0f0;
-  border: 2px dashed #66aaff;
-}
-
-/* File input text color */
-.resume-analyzer-container.dark input[type="file"] {
-  color: #f0f0f0;
-}
-
-.resume-analyzer-container.light input[type="file"] {
-  color: #222;
-}
-.drop-area {
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
-  transition: background-color 0.3s, color 0.3s;
+/* 🌟 RESPONSIVE */
+@media (max-width: 900px) {
+  .upload-box {
+    flex-direction: column;
+  }
 }

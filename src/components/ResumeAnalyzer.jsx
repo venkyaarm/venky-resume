@@ -7,7 +7,37 @@ import html2canvas from "html2canvas";
 
 GlobalWorkerOptions.workerSrc = workerURL;
 
-const ResumeAnalyzer = () => {
+/* ------------------ AI ENGINE DATA ------------------ */
+
+const skillKeywords = [
+  "java","python","react","node","javascript","html","css","sql",
+  "mongodb","firebase","aws","docker","git","linux","ui","ux",
+  "machine learning","ai","data science","opencv","tensorflow"
+];
+
+const educationKeywords = [
+  "bachelor","b.tech","b.e","b.sc","m.tech","m.sc","mba",
+  "degree","diploma","college","university","school"
+];
+
+const jobRoles = {
+  "react": "Frontend Developer",
+  "node": "Backend Developer",
+  "python": "Python Developer",
+  "java": "Java Developer",
+  "ai": "AI Engineer",
+  "machine learning": "ML Engineer",
+  "data": "Data Analyst",
+  "ui": "UI Designer",
+  "ux": "UX Designer",
+  "sql": "Database Engineer",
+  "aws": "Cloud Engineer",
+  "firebase": "Full Stack Developer"
+};
+
+/* ------------------ COMPONENT ------------------ */
+
+export default function ResumeAnalyzer() {
   const [resumeText, setResumeText] = useState("");
   const [analysis, setAnalysis] = useState("");
   const [loading, setLoading] = useState(false);
@@ -15,6 +45,8 @@ const ResumeAnalyzer = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const analysisRef = useRef(null);
+
+  /* ------------------ PDF Reader ------------------ */
 
   const handleFileUpload = (e) => {
     const file = e.target.files?.[0];
@@ -42,47 +74,87 @@ const ResumeAnalyzer = () => {
         }
         setResumeText(text.trim());
       } catch (err) {
-        alert("Error reading PDF: " + err.message);
+        alert("Error reading PDF");
       }
     };
   };
 
-  const analyzeResume = async () => {
-    if (!resumeText.trim()) return alert("Please provide resume content!");
-    setLoading(true);
-    try {
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyDsDZJmml18dqhEwVDPSoZdhesZStaBDJ0`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [
-              {
-                parts: [
-                  {
-                    text: `Analyze the following resume text and return results under these sections:\n
-1. 📌 Key Strengths\n
-2. 💡 Skill Highlights\n
-3. 🎯 Suggested Job Roles\n
-4. 🏭 Suitable Industries\n
-5. ✅ Improvement Suggestions\n\nResume:\n${resumeText}`,
-                  },
-                ],
-              },
-            ],
-          }),
-        }
-      );
-      const data = await res.json();
-      const result = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      setAnalysis(result || "No analysis found.");
-    } catch (err) {
-      setAnalysis("Failed to analyze the resume. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  /* ------------------ AI Resume Analysis ------------------ */
+
+  const analyzeResume = () => {
+  if (!resumeText.trim()) return alert("Please provide resume content!");
+  setLoading(true);
+
+  setTimeout(() => {
+    const text = resumeText.toLowerCase();
+
+    const skillsFound = skillKeywords.filter(s => text.includes(s));
+    const educationFound = educationKeywords.filter(e => text.includes(e));
+
+    const experience = [];
+    if (text.includes("intern")) experience.push("Internship Experience");
+    if (text.includes("project")) experience.push("Project Work");
+    if (text.includes("company")) experience.push("Industry Exposure");
+    if (text.includes("freelance")) experience.push("Freelance Experience");
+
+    const roles = [];
+    Object.keys(jobRoles).forEach(k => {
+      if (text.includes(k)) roles.push(jobRoles[k]);
+    });
+
+    const strengths = [];
+    if (skillsFound.length >= 4) strengths.push("Strong Technical Skill Set");
+    if (text.includes("team")) strengths.push("Good Team Player");
+    if (text.includes("lead")) strengths.push("Leadership Qualities");
+    if (text.includes("problem")) strengths.push("Problem Solving Skills");
+    if (text.includes("award") || text.includes("achievement")) strengths.push("Achievements & Awards");
+
+    /* --------- SMART IMPROVEMENT ENGINE --------- */
+
+    const improvements = [];
+
+    if (!text.match(/\d{10}/)) improvements.push("Add a valid phone number");
+    if (!text.includes("@")) improvements.push("Add a professional email address");
+    if (!text.includes("linkedin")) improvements.push("Add your LinkedIn profile");
+    if (!text.includes("github")) improvements.push("Add your GitHub profile");
+    if (!text.includes("summary") && !text.includes("objective"))
+      improvements.push("Add a career summary or objective");
+    if (skillsFound.length < 3)
+      improvements.push("Add more technical skills relevant to your field");
+    if (educationFound.length === 0)
+      improvements.push("Clearly mention your education details");
+    if (!text.includes("project") && !text.includes("intern"))
+      improvements.push("Include projects or internship experience");
+    if (!text.includes("certificate"))
+      improvements.push("Add certifications to strengthen your profile");
+
+    const report = `
+📌 KEY STRENGTHS
+${strengths.length ? strengths.map(s=>"• "+s).join("\n") : "• Good learning potential"}
+
+💡 SKILL HIGHLIGHTS
+${skillsFound.length ? skillsFound.map(s=>"• "+s.toUpperCase()).join("\n") : "• Skills not clearly mentioned"}
+
+🎯 SUGGESTED JOB ROLES
+${roles.length ? [...new Set(roles)].map(r=>"• "+r).join("\n") : "• Software Developer"}
+
+🏫 EDUCATION
+${educationFound.length ? educationFound.map(e=>"• "+e).join("\n") : "• Education not detected"}
+
+💼 EXPERIENCE
+${experience.length ? experience.map(e=>"• "+e).join("\n") : "• Fresher"}
+
+🚀 IMPROVEMENTS
+${improvements.length ? improvements.map(i=>"• "+i).join("\n") : "• Your resume is already strong and professional"}
+`;
+
+    setAnalysis(report);
+    setLoading(false);
+  }, 700);
+};
+
+
+  /* ------------------ EXPORT ------------------ */
 
   const exportText = () => {
     const blob = new Blob([analysis], { type: "text/plain" });
@@ -95,98 +167,61 @@ const ResumeAnalyzer = () => {
   const exportPDF = async () => {
     if (!analysisRef.current) return;
 
-    const element = analysisRef.current;
-
-    // Temporarily style for better PDF layout
-    element.classList.add("pdf-export-mode");
-    await new Promise((res) => setTimeout(res, 100));
-
-    const canvas = await html2canvas(element, {
-      scale: 2,
-      useCORS: true,
-      scrollY: -window.scrollY,
-    });
-
-    element.classList.remove("pdf-export-mode");
-
+    const canvas = await html2canvas(analysisRef.current, { scale: 2 });
     const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF("p", "mm", "a4");
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
+    const pdf = new jsPDF("p","mm","a4");
 
-    const imgProps = {
-      width: pdfWidth,
-      height: (canvas.height * pdfWidth) / canvas.width,
-    };
+    const w = pdf.internal.pageSize.getWidth();
+    const h = (canvas.height * w) / canvas.width;
 
-    let position = 0;
-    let heightLeft = imgProps.height;
-
-    pdf.addImage(imgData, "PNG", 0, position, imgProps.width, imgProps.height);
-    heightLeft -= pdfHeight;
-
-    while (heightLeft > 0) {
-      position -= pdfHeight;
-      pdf.addPage();
-      pdf.addImage(imgData, "PNG", 0, position, imgProps.width, imgProps.height);
-      heightLeft -= pdfHeight;
-    }
-
+    pdf.addImage(imgData,"PNG",0,0,w,h);
     pdf.save("resume_analysis.pdf");
   };
+
+  /* ------------------ UI ------------------ */
 
   return (
     <div className={`resume-analyzer-container ${isDarkMode ? "dark" : "light"}`}>
       <div className="header-bar">
-        <h1 className="title">🚀 Venky Resume Analyzer</h1>
-        <button className="toggle-btn" onClick={() => setIsDarkMode(!isDarkMode)}>
-          {isDarkMode ? "🌞 Light Mode" : "🌙 Dark Mode"}
+        <h1>🚀 Resume Analyzer</h1>
+        <button onClick={()=>setIsDarkMode(!isDarkMode)}>
+          {isDarkMode ? "🌞 Light" : "🌙 Dark"}
         </button>
       </div>
 
       <div className="upload-box">
-        <div
-          className={`drop-area ${dragging ? "dragging" : ""}`}
-          onDragOver={(e) => {
-            e.preventDefault();
-            setDragging(true);
-          }}
-          onDragLeave={() => setDragging(false)}
+        <div className={`drop-area ${dragging?"dragging":""}`}
+          onDragOver={e=>{e.preventDefault();setDragging(true);}}
+          onDragLeave={()=>setDragging(false)}
           onDrop={handleDrop}
         >
-          <p>📥 Drag & drop a PDF here or</p>
-          <input type="file" accept="application/pdf" onChange={handleFileUpload} />
+          <p>📄 Drag & Drop PDF</p>
+          <input type="file" accept="application/pdf" onChange={handleFileUpload}/>
         </div>
 
         <textarea
-          className="resume-textarea"
-          placeholder="📄 Or paste your resume text here..."
           value={resumeText}
-          onChange={(e) => setResumeText(e.target.value)}
-        ></textarea>
+          onChange={e=>setResumeText(e.target.value)}
+          placeholder="Paste your resume text here..."
+        />
       </div>
 
-      <button onClick={analyzeResume} className="analyze-btn" disabled={loading}>
+      <button onClick={analyzeResume} disabled={loading}>
         {loading ? "Analyzing..." : "Analyze Resume"}
       </button>
 
       {analysis && (
         <>
           <div className="result-box" ref={analysisRef}>
-            <div className="pdf-page-frame">
-              <h2>📊 Analysis Result</h2>
-              <pre className="styled-analysis">{analysis}</pre>
-            </div>
+            <pre>{analysis}</pre>
           </div>
 
           <div className="export-buttons">
-            <button onClick={exportText}>📄 Export as Text</button>
-            <button onClick={exportPDF}>🧾 Export as PDF</button>
+            <button onClick={exportText}>📄 Export Text</button>
+            <button onClick={exportPDF}>📑 Export PDF</button>
           </div>
         </>
       )}
     </div>
   );
-};
-
-export default ResumeAnalyzer;
+}
